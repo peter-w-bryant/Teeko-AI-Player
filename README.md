@@ -64,7 +64,7 @@ python3 ai.py
 
 For demonstration purposed, I will play against the AI player such that I lost in the drop-phase.
 
-After executing the script, either the user or the AI player will be randomly selected to start. In this case, the AI player was selected at black, and made their move first.
+After executing the script, either the user or the AI player will be randomly selected to start. In this case, the AI player was selected as black, and made their move first.
 
 <p align="center">
   <img src="https://github.com/peter-w-bryant/Teeko-AI-Player/blob/main/images/demo_i1.png?raw=true" alt="Sublime's custom image"/>
