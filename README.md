@@ -40,4 +40,10 @@ The following helper functions are implemented to help with <b>make_move(self, s
   <li><b>heuristic_game_value(self, state)</b>: A function to evaluate all non-terminal states (Details Below).<br>
     <i>Inputs:</i> A board state.<br>
     <i>Returns:</i> A floating-point value between 1 and -1.</li>
+  
+   <li><b>minimax(self, state, depth)</b>: A function to return the best move for the current player.<br>
+    <i>Inputs:</i> A board state, and the maximum search tree depth.<br>
+    <i>Returns:</i> The best move for the current player.</li>
+  
+  
 </ul>
