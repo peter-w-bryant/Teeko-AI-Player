@@ -51,5 +51,11 @@ The following helper functions are implemented to help with <b>make_move(self, s
 To run this program locally simply clone this repository,
 
 ```
-git clone 
+git clone https://github.com/peter-w-bryant/Teeko-AI-Player.git
+```
+
+and run the game.py python3 script,
+
+```python
+python3 game.py
 ```
