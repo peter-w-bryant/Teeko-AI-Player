@@ -26,12 +26,18 @@ My <b>make_move(self, state)</b> contains all the logic that allows my AI player
 
 ### Helper Functions
 
-The following helper functions are implemented and called in the <b>make_move(self, state)</b> function:
+The following helper functions are implemented to help with <b>make_move(self, state)</b>'s functionality:
 
 <ul>
-  <li><b>succ(self, state)</b><br>
+  <li><b>succ(self, state)</b>: A function to determine a list of legal successor states from the current state.<br>
     <i>Inputs:</i> A board state.<br>
     <i>Returns:</i> A list of legal successor states.</li>
-  <li><b>game_value(self, state)</b></li>
-  <li><b>heuristic_game_value(self, state)</b></li>
+  
+  <li><b>game_value(self, state)</b>: A function to score successor states for wins or losses.<br>
+    <i>Inputs:</i> A board state.<br>
+    <i>Returns:</i> 1 if this TeekoPlayer wins, -1 if the opponent wins, 0 if no winner.</li>
+
+  <li><b>heuristic_game_value(self, state)</b>: A function to evaluate all non-terminal states.<br>
+    <i>Inputs:</i> A board state.<br>
+    <i>Returns:</i> 1 if this TeekoPlayer wins, -1 if the opponent wins, 0 if no winner.</li>
 </ul>
