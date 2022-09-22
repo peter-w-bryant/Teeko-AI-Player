@@ -44,6 +44,12 @@ The following helper functions are implemented to help with <b>make_move(self, s
    <li><b>minimax(self, state, depth)</b>: A function to return the best move for the current player.<br>
     <i>Inputs:</i> A board state, and the maximum search tree depth.<br>
     <i>Returns:</i> The best move for the current player.</li>
-  
-  
 </ul>
+
+## Running Teeko-AI-Player Locally
+
+To run this program locally simply clone this repository,
+
+```
+git clone 
+```
