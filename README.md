@@ -54,8 +54,8 @@ To run this program locally simply clone this repository,
 git clone https://github.com/peter-w-bryant/Teeko-AI-Player.git
 ```
 
-and run the game.py python3 script,
+and run the <b>ai.py</b> python3 script,
 
 ```python
-python3 game.py
+python3 ai.py
 ```
