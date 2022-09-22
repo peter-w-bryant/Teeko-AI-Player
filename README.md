@@ -16,10 +16,20 @@ If after the <b>drop phase</b> neither player has won, each player continues tak
 
 There are several functions defined in this program that ensure that the Teeko game remains valid (i.e. all rules are followed). I have ommited these functions from this write-up, and have instead opted to just describe the functions that allow my AI player to make decisions about where to move their pieces.
 
-My <b>make_move(self, state)</b> contains all the logic that allows my AI player to choose their move. This function can be broken down into the following components,
+My <b>make_move(self, state)</b> contains all the logic that allows my AI player to choose their move. This function can be broken down into the following components:
 
 <ol> 
   <li>Generates a subtree of depth <i>d</i> under the current state.</li>
   <li>Uses a heuristic scoring function to evaluate the "leaves" at depth <i>d</i>, and propagates these scores back up to the current state.</li>
   <li>Selects and returns the best possible next move using the <b>minimax</b> algorithm.</li>
 </ol>
+
+### Helper Functions
+
+The following helper functions are implemented and called in the <b>make_move(self, state)</b> function:
+
+<ul>
+  <li><b>succ(self, state)</b></li>
+  <li><b>game_value(self, state)</b></li>
+  <li><b>heuristic_game_value(self, state)</b></li>
+</ul>
