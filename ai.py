@@ -296,7 +296,7 @@ class TeekoPlayer:
                     move.insert(0, (row, col))
 
         stop = time.time()
-        print("Time taken = " + str(stop - start) + "s")
+        print("Move made in " + str(stop - start) + " seconds.\n")
         return move
 
     def opponent_move(self, move):
