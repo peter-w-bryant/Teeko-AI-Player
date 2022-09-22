@@ -59,3 +59,27 @@ and run the <b>ai.py</b> python3 script,
 ```python
 python3 ai.py
 ```
+
+## Sample Game
+
+For demonstration purposed, I will play against the AI player such that I lost in the drop-phase.
+
+After executing the script, either the user or the AI player will be randomly selected to start. In this case, the AI player was selected at black, and made their move first.
+
+<p align="center">
+  <img src="https://github.com/peter-w-bryant/Teeko-AI-Player/blob/main/images/demo_i1.png?raw=true" alt="Sublime's custom image"/>
+</p>
+
+Now it is the user's turn to select. I will chose to move my piece to 'A0', or the top left position in the grid. The AI player will quickly respond.
+
+<p align="center">
+  <img src="https://github.com/peter-w-bryant/Teeko-AI-Player/blob/main/images/demo_i2.png?raw=true" alt="Sublime's custom image"/>
+</p>
+
+I subsequently respond by playing 'A1', the AI player responds by placing a piece at 'B2'. It is clear to me that the AI player will play 'A2' next turn if playing optimally, which will allow them to win the game - so I decide to place my third piece at 'A2'. 
+
+<p align="center">
+  <img src="https://github.com/peter-w-bryant/Teeko-AI-Player/blob/main/images/demo_i3.png?raw=true" alt="Sublime's custom image"/>
+</p>
+
+But of course the AI player also had 'E2' available and places its final piece in that spot. They now have 4 pieces in a horizontal line, and they have won! ):
