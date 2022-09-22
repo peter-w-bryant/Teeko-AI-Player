@@ -62,9 +62,11 @@ python3 ai.py
 
 ## Sample Game
 
-For demonstration purposed, I will play against the AI player such that I lost in the drop-phase.
+### Screenshot Demo: Losing in the Drop Phase
 
-After executing the script, either the user or the AI player will be randomly selected to start. In this case, the AI player was selected at black, and made their move first.
+For demonstration purposes, I will play against the AI player such that I lose in the drop-phase.
+
+After executing the script, either the user or the AI player will be randomly selected to start. In this case, the AI player was selected as black, and made their move first.
 
 <p align="center">
   <img src="https://github.com/peter-w-bryant/Teeko-AI-Player/blob/main/images/demo_i1.png?raw=true" alt="Sublime's custom image"/>
@@ -83,3 +85,9 @@ I subsequently respond by playing 'A1', the AI player responds by placing a piec
 </p>
 
 But of course the AI player also had 'E2' available and places its final piece in that spot. They now have 4 pieces in a horizontal line, and they have won! ):
+
+### Video Demo: Losing After the Drop Phase
+
+In this instance I will play the AI player until after the drop phase, where I will lose after just a few moves. Additionally, I will try to make atleast one error or one invalid move to demonstrate how the error is handled.
+
+https://user-images.githubusercontent.com/72423203/191833096-01a3335a-a4db-4831-babc-a8d5c54ace61.mp4
