@@ -37,7 +37,7 @@ The following helper functions are implemented to help with <b>make_move(self, s
     <i>Inputs:</i> A board state.<br>
     <i>Returns:</i> 1 if this TeekoPlayer wins, -1 if the opponent wins, 0 if no winner.</li>
 
-  <li><b>heuristic_game_value(self, state)</b>: A function to evaluate all non-terminal states.<br>
+  <li><b>heuristic_game_value(self, state)</b>: A function to evaluate all non-terminal states (Details Below).<br>
     <i>Inputs:</i> A board state.<br>
-    <i>Returns:</i> 1 if this TeekoPlayer wins, -1 if the opponent wins, 0 if no winner.</li>
+    <i>Returns:</i> A floating-point value between 1 and -1.</li>
 </ul>
