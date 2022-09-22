@@ -33,7 +33,7 @@ The following helper functions are implemented to help with <b>make_move(self, s
     <i>Inputs:</i> A board state.<br>
     <i>Returns:</i> A list of legal successor states.</li>
   
-  <li><b>game_value(self, state)</b>: A function to score successor states for wins or losses.<br>
+  <li><b>game_value(self, state)</b>: A function to check the current board status for a win condition.<br>
     <i>Inputs:</i> A board state.<br>
     <i>Returns:</i> 1 if this TeekoPlayer wins, -1 if the opponent wins, 0 if no winner.</li>
 
