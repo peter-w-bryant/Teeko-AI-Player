@@ -3,34 +3,23 @@ import time
 import copy
 
 class TeekoPlayer:
-    """ An object representation for an AI game player for the game Teeko2.
+    """ An object representation for an AI Teeko player.
     """
     board = [[' ' for j in range(5)] for i in range(5)]
     pieces = ['b', 'r']
 
     def __init__(self):
-        """ Initializes a Teeko2Player object by randomly selecting red or black as its
-        piece color.
+        """ Initializes a AI Teeko player object by randomly choosing whether they are using red or black 
+        colored pieces.
         """
-        self.my_piece = random.choice(self.pieces)
-        self.opp = self.pieces[0] if self.my_piece == self.pieces[1] else self.pieces[1]
-        self.depth = 4 # max depth of minimax algorithm (6 is too slow, keep below 6)
-        			   # as depth increases, thinking time and difficulty increase
-
-    def check_drop_phase(self,state):
-        piece_count = 0
-        for row in state:
-            for position in row:
-                if position != ' ':
-                    piece_count += 1
-
-        if piece_count == 8:
-            return False
-        else:
-            return True
+        self.my_piece = random.choice(self.pieces)                                       # randomly choose a color
+        self.opp = self.pieces[0] if self.my_piece == self.pieces[1] else self.pieces[1] # set opponent color
+        self.depth = 4                                                                   # Depth limited minimax search. If depth <= 6, 
+                                                                                         # decisions take a long time to make.
 
     def succ(self, state, piece):
-        drop_phase = self.check_drop_phase(state)
+        """ Returns a list of all possible successor states."""
+        drop_phase = self.if_drop_phase(state)
         succ_list = []
         state_copy = copy.deepcopy(state)
 
@@ -94,7 +83,96 @@ class TeekoPlayer:
                             state_copy = copy.deepcopy(state)
         return succ_list
 
+    def if_drop_phase(self,state):
+        """ Checks if the game is in the drop phase or not.
+        """
+        num_pieces = 0
+        for row in state:
+            for idx in row:
+                if idx != ' ':
+                    num_pieces += 1
+
+        if num_pieces != 8:
+            return True
+        else:
+            return False
+
+
+    def make_move(self, state):
+        """ Returns the best move for the AI player.
+        """
+
+        start = time.time()
+
+        # Same as calling max_value(-inf, inf, state, 0) but allows best state to be saved
+        # assuming that max depth > 0
+        best_value = float("-inf")
+        best_state = None
+        for successor in self.succ(state, self.my_piece):
+            current_value = self.min_value(float("-inf"), float("inf"), successor, 1)
+            if current_value > best_value:
+                best_value = current_value
+                best_state = successor
+
+        drop_phase = self.if_drop_phase(state)
+        move = []
+        if not drop_phase:
+            for i in range(5):
+                for j in range(5):
+                    if state[i][j] != ' ' and state[i][j] != best_state[i][j]:
+                        (source_row, source_col) = (i,j)
+                        move.append((source_row, source_col))
+
+
+        for i in range(5):
+            for j in range(5):
+                if state[i][j] == ' ' and state[i][j] != best_state[i][j]:
+                    (row, col) = (i,j)
+                    # ensure the destination (row,col) tuple is at the beginning of the move list
+                    move.insert(0, (row, col))
+
+        stop = time.time()
+        print("Move made in " + str(stop - start) + " seconds.\n")
+        return move
+
+    def game_value(self, state):
+        """ Checks the current board status for a win condition.
+        """
+        # check horizontal wins
+        for row in state:
+            for i in range(2):
+                if row[i] != ' ' and row[i] == row[i+1] == row[i+2] == row[i+3]:
+                    return 1 if row[i]==self.my_piece else -1
+
+        # check vertical wins
+        for col in range(5):
+            for i in range(2):
+                if state[i][col] != ' ' and state[i][col] == state[i+1][col] == state[i+2][col] == state[i+3][col]:
+                    return 1 if state[i][col]==self.my_piece else -1
+
+        # check \ diagonal wins
+        for row in range(2):
+            for col in range(2):
+                if state[row][col] != ' ' and state[row][col] == state[row+1][col+1] == state[row+2][col+2] == state[row+3][col+3]:
+                    return 1 if state[row][col]==self.my_piece else -1
+
+        # check / diagonal wins
+        for row in range(2):
+            for col in range(3,5):
+                if state[row][col] != ' ' and state[row][col] == state[row+1][col-1] == state[row+2][col-2] == state[row+3][col-3]:
+                    return 1 if state[row][col]==self.my_piece else -1
+
+        # check 2x2 square  wins
+        for row in range(3):
+            for col in range(3):
+                if state[row][col] != ' ' and state[row][col] == state[row][col+1] == state[row+1][col] == state[row+1][col+1]:
+                    return 1 if state[row][col]==self.my_piece else -1
+
+        return 0 # no winner yet
+
     def heuristic_game_value(self, state, piece):
+        """ Evaluates all non-terminal states."""
+
         factor = 1 if piece == self.my_piece else -1
         if self.game_value(state) != 0:
             return self.game_value(state)
@@ -236,7 +314,15 @@ class TeekoPlayer:
         hval = max(max_row_score, max_col_score, max_diag1_score, max_diag2_score, max_square_score)
         return factor * hval
 
+############################################################################
+#
+# Minimax with Alpha-Beta Pruning Helper Functions: Max and Min
+#
+############################################################################
+
     def max_value(self, alpha, beta, state, depth):
+        """ Returns the maximum value of the state.
+        """
         if self.game_value(state) != 0:
             return self.game_value(state)
 
@@ -250,6 +336,8 @@ class TeekoPlayer:
         return alpha
 
     def min_value(self, alpha, beta, state, depth):
+        """ Returns the minimum value of the state.
+        """
         if self.game_value(state) != 0:
             return self.game_value(state)
 
@@ -262,42 +350,7 @@ class TeekoPlayer:
                 return beta
         return beta
 
-    def make_move(self, state):
-        """ Selects a (row, col) space for the next move.
-        """
-
-        start = time.time()
-
-        # Same as calling max_value(-inf, inf, state, 0) but allows best state to be saved
-        # assuming that max depth > 0
-        best_value = float("-inf")
-        best_state = None
-        for successor in self.succ(state, self.my_piece):
-            current_value = self.min_value(float("-inf"), float("inf"), successor, 1)
-            if current_value > best_value:
-                best_value = current_value
-                best_state = successor
-
-        drop_phase = self.check_drop_phase(state)
-        move = []
-        if not drop_phase:
-            for i in range(5):
-                for j in range(5):
-                    if state[i][j] != ' ' and state[i][j] != best_state[i][j]:
-                        (source_row, source_col) = (i,j)
-                        move.append((source_row, source_col))
-
-
-        for i in range(5):
-            for j in range(5):
-                if state[i][j] == ' ' and state[i][j] != best_state[i][j]:
-                    (row, col) = (i,j)
-                    # ensure the destination (row,col) tuple is at the beginning of the move list
-                    move.insert(0, (row, col))
-
-        stop = time.time()
-        print("Move made in " + str(stop - start) + " seconds.\n")
-        return move
+############################################################################
 
     def opponent_move(self, move):
         """ Validates the opponent's next move against the internal board representation.
@@ -335,40 +388,6 @@ class TeekoPlayer:
             print(line)
         print("   A B C D E\n")
 
-    def game_value(self, state):
-        """ Checks the current board status for a win condition.
-        """
-        # check horizontal wins
-        for row in state:
-            for i in range(2):
-                if row[i] != ' ' and row[i] == row[i+1] == row[i+2] == row[i+3]:
-                    return 1 if row[i]==self.my_piece else -1
-
-        # check vertical wins
-        for col in range(5):
-            for i in range(2):
-                if state[i][col] != ' ' and state[i][col] == state[i+1][col] == state[i+2][col] == state[i+3][col]:
-                    return 1 if state[i][col]==self.my_piece else -1
-
-        # check \ diagonal wins
-        for row in range(2):
-            for col in range(2):
-                if state[row][col] != ' ' and state[row][col] == state[row+1][col+1] == state[row+2][col+2] == state[row+3][col+3]:
-                    return 1 if state[row][col]==self.my_piece else -1
-
-        # check / diagonal wins
-        for row in range(2):
-            for col in range(3,5):
-                if state[row][col] != ' ' and state[row][col] == state[row+1][col-1] == state[row+2][col-2] == state[row+3][col-3]:
-                    return 1 if state[row][col]==self.my_piece else -1
-
-        # check 3x3 square corners wins
-        for row in range(3):
-            for col in range(3):
-                if state[row][col] != ' ' and state[row][col] == state[row][col+1] == state[row+1][col] == state[row+1][col+1]:
-                    return 1 if state[row][col]==self.my_piece else -1
-
-        return 0 # no winner yet
 
 
 ############################################################################
@@ -379,11 +398,11 @@ class TeekoPlayer:
 def main():
     print('Hello, this is Samaritan')
     ai = TeekoPlayer()
-    piece_count = 0
+    num_pieces = 0
     turn = 0
 
     # drop phase
-    while piece_count < 8 and ai.game_value(ai.board) == 0:
+    while num_pieces < 8 and ai.game_value(ai.board) == 0:
 
         # get the player or AI's move
         if ai.my_piece == ai.pieces[turn]:
@@ -406,7 +425,7 @@ def main():
                     print(e)
 
         # update the game variables
-        piece_count += 1
+        num_pieces += 1
         turn += 1
         turn %= 2
 
