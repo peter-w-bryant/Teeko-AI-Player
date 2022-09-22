@@ -29,7 +29,9 @@ My <b>make_move(self, state)</b> contains all the logic that allows my AI player
 The following helper functions are implemented and called in the <b>make_move(self, state)</b> function:
 
 <ul>
-  <li><b>succ(self, state)</b></li>
+  <li><b>succ(self, state)</b><br>
+    <i>Inputs:</i> A board state.<br>
+    <i>Returns:</i> A list of legal successor states.</li>
   <li><b>game_value(self, state)</b></li>
   <li><b>heuristic_game_value(self, state)</b></li>
 </ul>
