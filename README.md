@@ -1,7 +1,7 @@
 # Teeko-AI-Player
 
 ## Description
-A program that allows a user to play against my Teeko AI player.
+A program that allows a user to play Teeko against my AI player, which makes decisions by generating a list of successor states, evaluating states using a heuristic, and selecting an optimal move using Alpha-beta pruning.
 
 ## What is Teeko?
 Teeko is a game played between two players, each of which with 4 red or black pieces, on a 5x5 board. At the start of the game, the player with black pieces always starts, and then each player takes turns placing their pieces until all pieces have been placed on the board - I will refer to this initial sequence of dropping pieces as the <b>drop phase</b>. The <b>goal</b> of the game is for one player to get four pieces in a row either horizontally, vertically, diagonally, or in a 2x2 box (in the example below, black wins).
